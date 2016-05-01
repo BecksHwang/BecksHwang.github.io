@@ -151,21 +151,12 @@
 
   <section class="post">
     <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
-<pre><code>记录一下学习mybatis过程中遇到的问题，分享解决问题的经验。&lt;!--more--&gt;
-</code></pre><h1 id="乱码问题"><a href="#乱码问题" class="headerlink" title="乱码问题"></a>乱码问题</h1><hr>
-<pre><code>我用的jar是mybatis-3.3.1.jar。
-往MySql插中文数据的时候，对应字段在数据库中显示为？？。
-
-乱码的原因和解决办法网上有两种。
-
-第一种是由MySql数据库编码造成的，新建数据库的时候没有设置数据库字符集，需要修改数据库字符集为utf8，或者重建数据库设置字符集为utf8.
-第二种是连接MySql数据库url编写设置的问题，需要修改url为        jdbc_url=jdbc:mysql://localhost:3306/mybatis&lt;font color=#red size=72&gt;?useUnicode=true&amp;characterEncoding=utf8&lt;/font&gt;，即添加红色部分。
-
-我的解决过程：
-在Mysql上执行插入sql，中文插入正常，说明数据库编码没问题，不是第一种情况。于是乎修改XML中的url，但是报错 
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.xml.sax.SAXParseException; lineNumber: 30; columnNumber: 84; 对 实体 &quot;characterEncoding&quot; 的引用必须以 &apos;;&apos; 分隔符结尾。</span><br></pre></td></tr></table></figure>
-<pre><code>又查这个错误如何解决，结果网上说解决这个错误，要删掉?useUnicode=true&amp;characterEncoding=utf8，这不是坑爹吗＝。＝！现在可以确定错误的原因就集中在url编写的问题上。看报错说characterEncoding对象引用要以‘；’结束，想到在xml配置文件中配置数据库utl时，要使用&amp;的转义字符也就是&amp;amp;于是修改url为：
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;amp;characterEncoding=utf8&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>记录一下学习mybatis过程中遇到的问题，分享解决问题的经验。<a id="more"></a></p>
+<h1 id="乱码问题"><a href="#乱码问题" class="headerlink" title="乱码问题"></a>乱码问题</h1><hr>
+<p></p><p><br>我用的jar是mybatis-3.3.1.jar。<br>往MySql插中文数据的时候，对应字段在数据库中显示为？？。<br></p><p></p>
+<p></p><p><br>乱码的原因和解决办法网上有两种。<br>第一种是由MySql数据库编码造成的，新建数据库的时候没有设置数据库字符集，需要修改数据库字符集为utf8，或者重建数据库设置字符集为utf8.<br>第二种是连接MySql数据库url编写设置的问题，需要修改url为:value=”jdbc:mysql://localhost:3306/mybatis<font color="red" siza="10">?useUnicode=true&amp;characterEncoding=utf8”</font>，即添加红色部分。<br></p><p></p>
+<p></p><p><br>我的解决过程：<br>在Mysql上执行插入sql，中文插入正常，说明数据库编码没问题，不是第一种情况。于是乎修改XML中的url，但是报错:<br></p><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.xml.sax.SAXParseException; lineNumber: 30; columnNumber: 84; 对 实体 &quot;characterEncoding&quot; 的引用必须以 &apos;;&apos; 分隔符结尾。</span><br></pre></td></tr></table></figure><p></p>
+<p></p><p><br>又查这个错误如何解决，结果网上说解决这个错误，要删掉?useUnicode=true&amp;characterEncoding=utf8，这不是坑爹吗＝。＝！现在可以确定错误的原因就集中在url编写的问题上。看报错说characterEncoding对象引用要以‘；’结束，想到在xml配置文件中配置数据库url时，要使用&amp;的转义字符也就是&ampamp;于是修改url为：<br></p><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;amp;characterEncoding=utf8&quot; /&gt;</span><br></pre></td></tr></table></figure><p></p>
 <p>亲测有效。：）</p>
 
   </section>
