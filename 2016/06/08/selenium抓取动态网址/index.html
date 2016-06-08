@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>Becks</title>
+    <title>selenium抓取动态网址 | Becks</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="努力成长，希望能为开源做贡献">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Becks">
+    <meta name="twitter:title" content="selenium抓取动态网址 | Becks">
     <meta name="twitter:description" content="努力成长，希望能为开源做贡献">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Becks">
+    <meta property="og:title" content="selenium抓取动态网址 | Becks">
     <meta property="og:description" content="努力成长，希望能为开源做贡献">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://yoursite.com"/>
+    <link rel="canonical" href="http://yoursite.com/2016/06/08/selenium抓取动态网址/"/>
 
     
 </head>
@@ -138,47 +138,50 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
-    
-  <ol class="post-list">
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/06/08/selenium抓取动态网址/" title="link to post.title">selenium抓取动态网址</a></h2>
-      <p class="excerpt">
-    
-      前言
-今天用selenium抓取动态网址的时候踩了一些坑，记录一下！
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-06-08T15:27:04.000Z" class="post-list__meta--date date">2016-06-08</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-06-08T15:27:04.000Z" class="post-list__meta--date date">2016-06-08</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/selenium/">selenium</a>
-</span><a class="btn-border-small" href="/2016/06/08/selenium抓取动态网址/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/06/06/阿里云服务器/" title="link to post.title">阿里云服务器</a></h2>
-      <p class="excerpt">
-    
-      前言
-收集整理一些关于服务器的资料，看一看，敲一敲，加深印象。
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-06-06T15:36:10.000Z" class="post-list__meta--date date">2016-06-06</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/服务器/">服务器</a>
-</span><a class="btn-border-small" href="/2016/06/06/阿里云服务器/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-  </ol>
+</span>
+    </div>
+    <h1 class="post-title">selenium抓取动态网址</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
+<p>今天用selenium抓取动态网址的时候踩了一些坑，记录一下！<a id="more"></a></p>
+<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><hr>
+<p><br>    对于普通的静态页面，传统上采用jsoup方案抓取，即好用又稳定，但是随着对信息面的扩展，只对静态页面的抓取已经不能满足需求。这时候就需要我们去拓展抓取的页面，于是解决对js动态生成的页面的抓取问题，就自然摆在了眼前。<br></p><br># 方案<br>—<br><p><br>先前我已了解并测试过的方案有两个：（1）动态网址二次跳转加载另一个url，通过chrome开发者模式获得该url，把对原网址的抓取替换成该url的抓取就可以像抓取静态网址一样轻松实现抓取该类型动态网址。（2）动态网址通过发送请求url，返回数据动态生成页面，通过chrome开放者模式，找出请求url，对该url发起请求，获取json格式的返回数据，通过对返回数据的分析筛选获得需要的抓取信息。<br></p>
+  </section>
+
+</article>
 
 
+<section class="post-comments">
+  <div id="disqus_thread"></div>
+<script>
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
 
-</div>
+s.src = '//beckshwang.disqus.com/embed.js';
 
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
             <footer class="footer">
