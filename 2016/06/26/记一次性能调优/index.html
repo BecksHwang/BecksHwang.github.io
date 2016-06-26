@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>Becks</title>
+    <title>记一次性能调优 | Becks</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="努力成长，希望能为开源做贡献">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Becks">
+    <meta name="twitter:title" content="记一次性能调优 | Becks">
     <meta name="twitter:description" content="努力成长，希望能为开源做贡献">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Becks">
+    <meta property="og:title" content="记一次性能调优 | Becks">
     <meta property="og:description" content="努力成长，希望能为开源做贡献">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://yoursite.com"/>
+    <link rel="canonical" href="http://yoursite.com/2016/06/26/记一次性能调优/"/>
 
     
 </head>
@@ -138,62 +138,59 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
-    
-  <ol class="post-list">
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/06/26/记一次性能调优/" title="link to post.title">记一次性能调优</a></h2>
-      <p class="excerpt">
-    
-      前言
-接手公司的一个项目，跑项目的时候CPU很高，并且内存一直在上升，跑着跑着不定什么时候就挂了，要对项目进行优化，搞得都有点焦头烂了。
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-06-26T08:23:23.000Z" class="post-list__meta--date date">2016-06-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-06-26T08:23:23.000Z" class="post-list__meta--date date">2016-06-26</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/性能调优/">性能调优</a>
-</span><a class="btn-border-small" href="/2016/06/26/记一次性能调优/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/06/08/selenium抓取动态网址/" title="link to post.title">selenium抓取动态网址</a></h2>
-      <p class="excerpt">
-    
-      前言
-今天用selenium抓取动态网址的时候踩了一些坑，记录一下！
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-06-08T15:27:04.000Z" class="post-list__meta--date date">2016-06-08</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/selenium/">selenium</a>
-</span><a class="btn-border-small" href="/2016/06/08/selenium抓取动态网址/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/06/06/阿里云服务器/" title="link to post.title">阿里云服务器</a></h2>
-      <p class="excerpt">
-    
-      前言
-收集整理一些关于服务器的资料，看一看，敲一敲，加深印象。
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-06-06T15:36:10.000Z" class="post-list__meta--date date">2016-06-06</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/服务器/">服务器</a>
-</span><a class="btn-border-small" href="/2016/06/06/阿里云服务器/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-  </ol>
+</span>
+    </div>
+    <h1 class="post-title">记一次性能调优</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
+<p>接手公司的一个项目，跑项目的时候CPU很高，并且内存一直在上升，跑着跑着不定什么时候就挂了，要对项目进行优化，搞得都有点焦头烂了。<a id="more"></a></p>
+<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><hr>
+<p>抓取系统，起大量线程不间断的抓取大量网址。<br><br>存在问题：<br><br>（1）cpu过高<br><br>在24日下午优化之前，只要项目启动cpu就飙高，分分钟爆表。<br><br><img src="/images/blogImages/cpu.png" alt=""><br><br>（2）内存泄漏<br><br>在24日下午优化之前，只要项目启动，内存就已较快的速率上升，期间多次调整代码，内存变化很不稳定。<br><br><img src="/images/blogImages/neicun.png" alt=""><br></p>
+<h1 id="查找原因"><a href="#查找原因" class="headerlink" title="查找原因"></a>查找原因</h1><hr>
+<p></p><p>cup过高问题通过代码审查，发现抓取部分循环代码有大量重复性工作，对于每一个抓取网址都要进行网址解析，然后内容识别筛选过滤，期间为了防止重复抓取，还要调用redis缓存或查询数据库。这对系统性能造成了很大的影响，造成了CPU过高的问题。</p><p></p>
+<p></p><p>内存上升的问题折腾了好久，接手项目对项目把握程度有限，项目经过多人的手，代码改的面目全非，定位问题所在有一定难度，最终确认为是代码编写不当造成的内存泄漏问题。</p><p></p>
+<h1 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h1><hr>
+<p></p><p>解决CPU过高的问题是对抓取网址通过一定的方式判断网址是否有更新，对于没有更新的网址直接跳过后面的实际抓取工作，大大节省了cpu。</p><p></p>
+<p></p><p>内存泄漏问题有两个方面：<br><br>(1) java创建了一个新的对象，如果该对象被java 静态对象引用，则java垃圾回收机制将无法将该对象回收，在抓取代码的循环中就存在这样的问题，大量的循环new了大量不可被回收的对象。为解决这个问题，采用的办法是使用java WeakReference弱引用，弱引用的对象实例可以被垃圾回收机制回收掉。new出来的对象存放在堆内存，降低了一些堆内存泄漏。<br><br>2）java程序执行过程中调用函数方法，会在栈内存中为函数方法开辟一个空间用于存放基本类型的变量或对象的引用变量等，在原来的代码中，采取的是递归调用线程run方法的方式进行不间断的抓取任务，每调用一次run方法，都要消耗掉一部分栈内存，多线程下的快速递归造成了栈内存的急剧消耗。这点可以肯定，把（1）中的问题修改以后打印日志中暴露了（2）的问题。解决办法是把run方法递归调用改为抓取部分代码的循环，这样程序就不用一直为函数方法消耗栈内存。<br></p><p></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><hr>
+<p>(1)编程过程中要特别注意静态对象的使用，防止被引用对象无法被垃圾回收机制回收。<br><br>(2)使用递归调用方法时要注意递归的结束条件，如果是无限的递归很容易造成栈内存爆满，报StackOverflowError错误。</p>
+
+  </section>
+
+</article>
 
 
+<section class="post-comments">
+  <div id="disqus_thread"></div>
+<script>
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
 
-</div>
+s.src = '//beckshwang.disqus.com/embed.js';
 
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
             <footer class="footer">
