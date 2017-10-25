@@ -150,12 +150,16 @@
   </header>
 
   <section class="post">
-    <p>In brightest day, In blackest night.<br>No evil shall escape my sight.<br>Let those who worship evil’s might.<br>Beware my power,<br>Green Lantern’s light!<a id="more"></a></p>
+    <p>In brightest day, In blackest night.No evil shall escape my sight.Let those who worship evil’s might.<br>Beware my power,Green Lantern’s light!<a id="more"></a></p>
 <hr>
 <p>在浩瀚无垠的宇宙中，有一个叫守卫者的组织，将全宇宙划分为3600个扇区，而每个扇区都有一个绿灯侠负责治安巡逻维护和平，而承载能量的则是一枚戴在手上、需要定时充能的绿色戒指。这就是绿灯侠的背景故事，有段时间很沉迷于DC漫画强大的宇宙观，不惜花了19块买了腾讯视频会员，就为了看《绿灯侠》😂。</p>
 <p>咳咳！是不是感觉有点跑题呢，且听我慢慢道来。如有雷同，不存在的！</p>
 <p>宇宙中某个扇区某个星球的居民遭受邪恶势力的入侵时，会向绿灯侠主星OA星球发送求救信号，OA星球上的守卫者接收到求救信号后，会通过绿灯戒指通知该扇区附近的绿灯侠前往支援。这里我把Nginx比做OA星球，先让我们把OA星球建立起来吧！</p>
-<p>未完待续。。。</p>
+<h2 id="Ubuntu下安装Nginx"><a href="#Ubuntu下安装Nginx" class="headerlink" title="Ubuntu下安装Nginx"></a>Ubuntu下安装Nginx</h2><h3 id="1-环境"><a href="#1-环境" class="headerlink" title="1.环境"></a>1.环境</h3><p>Ubuntu-17.04<br><br>JDK-1.8<br><br>Nginx-1.12.2</p>
+<h3 id="2-下载"><a href="#2-下载" class="headerlink" title="2.下载"></a>2.下载</h3><p><a href="http://nginx.org/en/download.html" target="_blank" rel="external">http://nginx.org/en/download.html</a><br><br>我下的是最新的稳定版本<img src="http://oxr7a2a5t.bkt.clouddn.com/17-10-25/28498218.jpg" alt=""><br><br>也可以通过命令行下载<br><code>#wget http://nginx.org/download/nginx-1.12.2.tar.gz</code><br>下好以后解压到指定文件夹，我是放在了/usr/nginx下。<br><code>#tar -zxvf nginx-1.12.2.tar.gz -O /usr/nginx //解压文件：</code></p>
+<h3 id="3-安装"><a href="#3-安装" class="headerlink" title="3.安装"></a>3.安装</h3><p>切换到/usr/nginx/nginx-1.12.2目录下，运行./configure 进行安装<img src="http://oxr7a2a5t.bkt.clouddn.com/17-10-25/28848219.jpg" alt=""><br>如果遇到这样的报错<img src="http://oxr7a2a5t.bkt.clouddn.com/17-10-25/32635069.jpg" alt=""><br>解决办法是<img src="http://oxr7a2a5t.bkt.clouddn.com/17-10-25/21124899.jpg" alt="">然后<code>make &amp;&amp; make install</code><br><br>如果遇到这样的错误<img src="http://oxr7a2a5t.bkt.clouddn.com/17-10-25/79718666.jpg" alt=""><br>决解办法是<img src="http://oxr7a2a5t.bkt.clouddn.com/17-10-25/76978711.jpg" alt=""><br>然后<code>make &amp;&amp; make install</code><br><br>原因是Nginx是高度自由化的Web服务器，它的功能是由许多模块来支持。如果使用了某个模块，这个模块使用了一些类似pcre或zlib等的第三方库，所以就必须先安装这些软件。</p>
+<p>一切都OK以后,修改配置文件nginx.conf,把端口改成88，然后配置文件方式启动nginx<br><img src="http://oxr7a2a5t.bkt.clouddn.com/17-10-25/47194470.jpg" alt=""><br>可以看见nginx已经启动，访问本地88端口可以看到欢迎页面说明已经启动成功<img src="http://oxr7a2a5t.bkt.clouddn.com/17-10-25/36123236.jpg" alt=""><br>至此，OA主星已经搭建完毕：）</p>
+<p>未完待续！</p>
 
   </section>
 
